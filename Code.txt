@@ -1,0 +1,210 @@
+''============================================================================================
+''****************
+''Business requirement: Sales Reporyt, OpenfileFromFolder To loop through all Excel files in a user specified folder and perform a set task on them
+''Any types of Excel Automation, Report, Dashboard, VBA, Macros, MIS, Adv. Excel, SQL, Web Development using Django please contact me
+''Name:Mahetab
+''mahetabforwork@gmail.com
+''Mob:+91 9545302653
+
+''****************
+''============================================================================================
+
+
+
+Sub makePivot()
+'
+' makePivot Macro
+'
+
+'
+    Range("A1").Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range("A1:G70926").Select
+    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
+        "A!R1C1:R70926C7", Version:=xlPivotTableVersion15).CreatePivotTable _
+        TableDestination:="", TableName:="PivotTable1", DefaultVersion:= _
+        xlPivotTableVersion15
+    ActiveSheet.PivotTableWizard TableDestination:=ActiveSheet.Cells(3, 1)
+    ActiveSheet.Cells(3, 1).Select
+    With ActiveSheet.PivotTables("PivotTable1").PivotFields("<ticker>")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable1").PivotFields("<high>"), "Sum of <high>", xlSum
+    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable1").PivotFields("<low>"), "Sum of <low>", xlSum
+    Range("C7").Select
+    Sheets("Sheet1").Select
+    With ActiveSheet.PivotTables("PivotTable1").PivotFields("<date>")
+        .Orientation = xlRowField
+        .Position = 2
+    End With
+    ActiveSheet.PivotTables("PivotTable1").PivotSelect "'<date>'[All]", _
+        xlLabelOnly + xlFirstRow, True
+    Range("A66").Select
+    Selection.End(xlDown).Select
+    Range("A70785").Select
+End Sub
+Sub Macro2()
+'
+' Macro2 Macro
+'
+
+'
+    Range("B270").Select
+    With ActiveSheet.PivotTables("PivotTable1")
+        .InGridDropZones = True
+        .RowAxisLayout xlTabularRow
+    End With
+End Sub
+Sub Macro3()
+'
+' Macro3 Macro
+'
+
+'
+    ActiveWorkbook.Worksheets("Sheet1").PivotTables("PivotTable1").PivotCache. _
+        CreatePivotTable TableDestination:="A!R2C11", TableName:="PivotTable2", _
+        DefaultVersion:=xlPivotTableVersion15
+    Sheets("A").Select
+    Cells(2, 11).Select
+    With ActiveSheet.PivotTables("PivotTable2").PivotFields("<ticker>")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("PivotTable2").PivotFields("<date>")
+        .Orientation = xlRowField
+        .Position = 2
+    End With
+    ActiveSheet.PivotTables("PivotTable2").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable2").PivotFields("<high>"), "Sum of <high>", xlSum
+    ActiveSheet.PivotTables("PivotTable2").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable2").PivotFields("<low>"), "Sum of <low>", xlSum
+    ActiveSheet.PivotTables("PivotTable2").PivotSelect "'<date>'[All]", _
+        xlLabelOnly + xlFirstRow, True
+    With ActiveSheet.PivotTables("PivotTable2")
+        .InGridDropZones = True
+        .RowAxisLayout xlTabularRow
+    End With
+    ActiveSheet.PivotTables("PivotTable2").PivotSelect _
+        "A '20160114' 'Sum of <low>'", xlDataOnly, True
+    Range("K23").Select
+End Sub
+Sub copyOnePvt()
+'
+' copyOnePvt Macro
+'
+
+'
+    Columns("K:N").Select
+    Selection.Copy
+    Range("P1").Select
+    ActiveSheet.Paste
+    ActiveSheet.PivotTables("PivotTable3").PivotSelect "'20160107'", xlDataAndLabel _
+        , True
+    ActiveSheet.PivotTables("PivotTable3").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable3").PivotFields("<open>"), "Sum of <open>", xlSum
+    ActiveSheet.PivotTables("PivotTable3").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable3").PivotFields("<close>"), "Sum of <close>", xlSum
+    ActiveWindow.SmallScroll ToRight:=5
+    ActiveSheet.PivotTables("PivotTable3").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable3").PivotFields("<vol>"), "Sum of <vol>", xlSum
+    Range("R7").Select
+End Sub
+Sub Macro5()
+'
+' Macro5 Macro
+'
+
+'
+    Columns("P:V").Select
+    Selection.Copy
+    Range("X1").Select
+    ActiveSheet.Paste
+    Range("X11").Select
+    With ActiveSheet.PivotTables("PivotTable4").PivotFields("<ticker>")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    Range("Y26").Select
+    Selection.End(xlDown).Select
+    Range("X264").Select
+    Selection.End(xlUp).Select
+    Selection.End(xlUp).Select
+    Columns("X:AC").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("AE1").Select
+    ActiveSheet.Paste
+    Range("AE6").Select
+    With ActiveSheet.PivotTables("PivotTable5").PivotFields("<date>")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    Range("AI14").Select
+    Application.CutCopyMode = False
+    ActiveWorkbook.Save
+End Sub
+
+
+
+Sub RefereshAll()
+
+    ActiveWorkbook.RefreshAll
+    Range("A1").Select
+    MsgBox ("Report Referesh Successfuly.....")
+End Sub
+
+
+Sub Macro1()
+'
+' Macro1 Macro
+'
+
+'
+    Range("M6:AF6").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range("M6:AF296").Select
+    Selection.Copy
+    Application.Goto Reference:="R6C16303"
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    Range("XCB6").Select
+    Sheets("A").Select
+End Sub
+
+
+
+
+
+Sub Sheet_A()
+'
+' Sheet_A Macro
+'
+
+'
+    Range("M1:AI5").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range("M1:AI296").Select
+    Selection.Copy
+    Range("CD1").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    Selection.Columns.AutoFit
+    Range("CG13").Select
+    Selection.End(xlDown).Select
+    Range("CD296:CX296").Select
+    Application.CutCopyMode = False
+    Selection.Clear
+End Sub
+
+
+
+
